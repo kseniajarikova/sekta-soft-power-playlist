@@ -239,7 +239,10 @@
 
     function searchUrl(service, track) {
       const query = `${track.title} ${track.artist}`;
-      if (service === "yandex") return `https://music.yandex.ru/search?text=${encodeURIComponent(query)}`;
+      if (service === "yandex") {
+        if (track.title === "Жить в кайф" && track.artist === "Макс Корж") return "https://music.yandex.by/album/1683700/track/32038184";
+        return `https://music.yandex.ru/search?text=${encodeURIComponent(query)}`;
+      }
       return `https://open.spotify.com/search/${encodeURIComponent(query)}`;
     }
     function esc(value) {
