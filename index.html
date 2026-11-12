@@ -89,7 +89,9 @@
     .save { flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; background: var(--white); color: var(--purple); font-size: 20px; cursor: pointer; }
     .save[aria-pressed="true"] { border-color: #f7b4d6; background: #fff0f8; color: #d83d8a; }
     .links { display: flex; gap: 8px; margin-top: auto; padding-top: 12px; }
-    .service-link { flex: 1; display: inline-flex; justify-content: center; align-items: center; min-height: 39px; padding: 8px 9px; border-radius: 11px; background: var(--paper); color: var(--blue); font-size: 12px; font-weight: 800; text-decoration: none; transition: background .16s ease; }
+    .service-link { flex: 1; display: inline-flex; justify-content: flex-start; align-items: center; gap: 7px; min-height: 52px; padding: 5px 7px; border-radius: 11px; background: var(--paper); color: var(--blue); font-size: 12px; font-weight: 800; text-decoration: none; transition: background .16s ease; }
+    .cover-preview { width: 40px; height: 40px; flex: 0 0 40px; object-fit: cover; border-radius: 8px; background: var(--ice); }
+    .service-name { line-height: 1.15; }
     .service-link:hover { background: var(--ice); }
     .empty { grid-column: 1/-1; padding: 36px 20px; border: 1px dashed var(--line); border-radius: 20px; color: var(--muted); text-align: center; }
     .cta { margin: 0 auto 72px; padding: clamp(25px, 4vw, 40px); border-radius: 26px; background: var(--lime); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -247,7 +249,7 @@
           <div class="track-top"><div><h3>${esc(track.title)}</h3><p class="artist">${esc(track.artist)}</p></div>
           <button class="save" type="button" data-save="${esc(key)}" aria-label="${isSaved ? "Убрать из сохранённых" : "Сохранить трек"}: ${esc(track.title)}" aria-pressed="${isSaved}">${isSaved ? "♥" : "♡"}</button></div>
           <span class="tag">${labels[track.category]}</span>
-          <div class="links"><a class="service-link" href="${searchUrl("yandex", track)}" target="_blank" rel="noopener noreferrer">Яндекс Музыка ↗</a><a class="service-link" href="${searchUrl("spotify", track)}" target="_blank" rel="noopener noreferrer">Spotify ↗</a></div>
+          <div class="links"><a class="service-link" href="${searchUrl("yandex", track)}" target="_blank" rel="noopener noreferrer"><img class="cover-preview" src="https://itunes.apple.com/search?term=${encodeURIComponent(track.title + " " + track.artist)}&entity=song&limit=1" alt="" loading="lazy" onerror="this.style.display='none'"><span class="service-name">Яндекс<br>Музыка ↗</span></a><a class="service-link" href="${searchUrl("spotify", track)}" target="_blank" rel="noopener noreferrer"><img class="cover-preview" src="https://itunes.apple.com/search?term=${encodeURIComponent(track.title + " " + track.artist)}&entity=song&limit=1" alt="" loading="lazy" onerror="this.style.display='none'"><span class="service-name">Spotify ↗</span></a></div>
         </article>`;
       }).join("") : `<div class="empty">Ничего не нашлось. Попробуй изменить запрос или фильтр.</div>`;
       countEl.textContent = `Сохранено: ${saved.size}`;
