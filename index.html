@@ -76,8 +76,8 @@
     .search-wrap span { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); color: var(--muted); }
     .search { width: 100%; min-height: 48px; padding: 12px 15px 12px 44px; border: 1px solid var(--line); border-radius: 14px; background: rgba(255,255,255,.72); color: var(--ink); }
     .tracks { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; padding-bottom: 64px; }
-    .track { position: relative; display: flex; flex-direction: column; min-height: 190px; padding: 18px; overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: rgba(255,255,255,.84); box-shadow: 0 7px 24px rgba(32,44,93,.045); transition: transform .18s ease, box-shadow .18s ease; }
-    .track:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .track { position: relative; display: flex; flex-direction: column; min-height: 206px; padding: 20px; overflow: hidden; border: 1px solid rgba(42,57,116,.12); border-radius: 24px; background: linear-gradient(145deg,#fff 0%,#faf9ff 100%); box-shadow: 0 8px 26px rgba(32,44,93,.06); transition: transform .2s ease, box-shadow .2s ease; }
+    .track:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(32,44,93,.13); }
     .track:before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: var(--lilac); }
     .track[data-category="cardio"]:before { background: var(--lime); }
     .track[data-category="strength"]:before { background: var(--ice); }
@@ -89,13 +89,13 @@
     .save { flex: 0 0 auto; display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--line); border-radius: 50%; background: var(--white); color: var(--purple); font-size: 20px; cursor: pointer; }
     .save[aria-pressed="true"] { border-color: #f7b4d6; background: #fff0f8; color: #d83d8a; }
     .links { display: flex; gap: 8px; margin-top: auto; padding-top: 12px; }
-    .platform-switch { display:flex; align-items:center; gap:12px; margin:0 0 18px; }
+    .platform-switch { display:flex; align-items:center; gap:14px; margin:0 0 18px; }
     .platform-label { color:var(--muted); font-size:14px; font-weight:750; }
     .lever { position:relative; width:176px; height:48px; padding:4px; border:0; border-radius:999px; background:#ded9ec; cursor:pointer; box-shadow:inset 0 2px 5px #202c5d22; }
     .lever-track { position:absolute; inset:4px; display:flex; align-items:center; justify-content:space-around; color:var(--blue); font-size:11px; font-weight:800; }
     .lever-knob { position:absolute; z-index:1; top:4px; left:4px; width:84px; height:40px; display:grid; place-items:center; border-radius:999px; background:var(--purple); color:white; font-size:12px; font-weight:850; box-shadow:0 3px 8px #202c5d44; transition:transform .22s ease; }
     .lever[data-service="spotify"] .lever-knob { transform:translateX(84px); }
-    .cover-box { width:40px;height:40px;flex:0 0 40px;position:relative;border-radius:8px;overflow:hidden;background:linear-gradient(135deg,var(--lilac),var(--blue));display:grid;place-items:center;color:#fff;font-size:17px;font-weight:900; }
+    .cover-box { width:48px;height:48px;flex:0 0 48px;position:relative;border-radius:11px;overflow:hidden;background:linear-gradient(135deg,var(--lilac),var(--blue));display:grid;place-items:center;color:#fff;font-size:18px;font-weight:900; }
     .cover-box img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover; }
     .cover-box.no-cover img { display:none; }
     .service-link { flex: 1; display: inline-flex; justify-content: flex-start; align-items: center; gap: 7px; min-height: 52px; padding: 5px 7px; border-radius: 11px; background: var(--paper); color: var(--blue); font-size: 12px; font-weight: 800; text-decoration: none; transition: background .16s ease; }
@@ -267,7 +267,7 @@
         try {
           const response = await fetch(`https://itunes.apple.com/search?term=${box.dataset.coverQuery}&entity=song&limit=1`);
           const data = await response.json();
-          if (data.results && data.results[0]) box.querySelector("img").src = data.results[0].artworkUrl100;
+          if (data.results && data.results[0]) box.querySelector("img").src = data.results[0].artworkUrl100.replace("100x100","300x300");
           else box.classList.add("no-cover");
         } catch { box.classList.add("no-cover"); }
       });
