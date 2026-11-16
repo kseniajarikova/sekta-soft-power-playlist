@@ -68,9 +68,10 @@
     .soft-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 15px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); color: var(--ink); font-weight: 750; cursor: pointer; transition: background .16s ease, transform .16s ease; }
     .soft-button:hover:not(:disabled) { transform: translateY(-1px); background: #fff; }
     .soft-button:disabled { cursor: not-allowed; opacity: .45; }
-    .filters { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin: 4px 0 18px; }
-    .filter { min-height: 42px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--blue); font-size: 14px; font-weight: 750; cursor: pointer; }
-    .filter[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--white); }
+    .filters { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 6px 0 20px; }
+    .filter { display: flex; align-items: center; justify-content: center; min-width: 0; min-height: 54px; padding: 11px 14px; border: 1px solid var(--line); border-radius: 15px; background: var(--white); color: var(--blue); font-size: 14px; line-height: 1.25; font-weight: 750; text-align: center; cursor: pointer; transition: border-color .16s ease, background .16s ease, color .16s ease, transform .16s ease, box-shadow .16s ease; }
+    .filter:hover { border-color: var(--purple); transform: translateY(-1px); box-shadow: 0 5px 14px rgba(32,44,93,.08); }
+    .filter[aria-pressed="true"] { border-color: var(--purple); background: var(--purple); color: var(--white); box-shadow: 0 5px 14px rgba(91,54,205,.18); }
     .search-row { display: flex; gap: 12px; margin-bottom: 20px; }
     .search-wrap { position: relative; flex: 1; }
     .search-wrap span { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); color: var(--muted); }
