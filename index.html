@@ -218,7 +218,7 @@
       { title: "Vivir Mi Vida", artist: "Marc Anthony", category: "dance" },
       { title: "Buttons", artist: "The Pussycat Dolls", category: "dance" },
       { title: "Hips Don't Lie", artist: "Alegra", category: "dance" },
-      { title: "La Camisa Negra", artist: "Best Of Hits", category: "dance" },
+      { title: "La Camisa Negra", artist: "Juanes (версия из скриншота — Best Of Hits)", category: "dance" },
       { title: "Rampampam", artist: "Minelli", category: "dance" },
       { title: "Tango - Composition", artist: "Mgzavrebi", category: "dance" },
       { title: "Луна_23", artist: "Хмыров", category: "dance" }
@@ -237,9 +237,11 @@
     const toastEl = document.getElementById("toast");
     let toastTimer;
 
+    const unavailableOnYandex = new Set(["Oops!... I Did It Again", "Hope", "Into You", "Midsummer Shadow", "The Taste of Blood"]);
     function searchUrl(service, track) {
       const query = `${track.title} ${track.artist}`;
       if (service === "yandex") {
+        if (unavailableOnYandex.has(track.title)) return null;
         if (track.title === "Жить в кайф" && track.artist === "Макс Корж") return "https://music.yandex.by/album/1683700/track/32038184";
         return `https://music.yandex.ru/search?text=${encodeURIComponent(query)}`;
       }
@@ -251,10 +253,11 @@
     function render() {
       const query = queryEl.value.trim().toLocaleLowerCase("ru");
       const visible = tracks.filter(track => {
+        const availableOnService = activeService !== "yandex" || !unavailableOnYandex.has(track.title);
         const matchesFilter = activeFilter === "all" || track.category === activeFilter;
         const matchesSaved = !favouritesOnly || saved.has(track.title + "::" + track.artist);
         const matchesQuery = !query || `${track.title} ${track.artist} ${labels[track.category]}`.toLocaleLowerCase("ru").includes(query);
-        return matchesFilter && matchesSaved && matchesQuery;
+        return availableOnService && matchesFilter && matchesSaved && matchesQuery;
       });
       tracksEl.innerHTML = visible.length ? visible.map(track => {
         const key = track.title + "::" + track.artist;
