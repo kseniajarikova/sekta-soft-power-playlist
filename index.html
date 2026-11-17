@@ -230,6 +230,20 @@
       { title: "Tango - Composition", artist: "Mgzavrebi", category: "dance" },
       { title: "Луна_23", artist: "Хмыров", category: "dance" }
     ];
+    const spotifyTracks = {
+      "Жить в кайф": "https://open.spotify.com/track/2m3PVx1gsVB5upxi94IW8I",
+      "Low": "https://open.spotify.com/track/36nfKPGZeUnJWKrCEqTG3m",
+      "Umbrella": "https://open.spotify.com/track/2yPoXCs7BSIUrucMdK5PzV",
+      "Oops!... I Did It Again": "https://open.spotify.com/track/6naxalmIoLFWR0siv8dnQQ",
+      "I Run": "https://open.spotify.com/track/62t2U6DZM9cb28Mvfx86UX",
+      "Can't Stop": "https://open.spotify.com/track/3ZOEytgrvLwQaqXreDs2Jx",
+      "Idioteque": "https://open.spotify.com/track/7xqeIdLJSf3bgmZ7vUvHrE",
+      "Into You": "https://open.spotify.com/track/4aU3QqVpa51cuNhaDxDzYc",
+      "It's a Sin": "https://open.spotify.com/track/6PqLKU4OxX7p8D8bToviGC",
+      "Once Upon a Time (Instrumental)": "https://open.spotify.com/track/2tlXC68gNF7zALe0UZkY4L",
+      "DDU-DU DDU-DU": "https://open.spotify.com/track/2aI2k39nfa3KFsa4JclQzw"
+    };
+    tracks.forEach(track => { track.spotify = spotifyTracks[track.title] || null; });
     const labels = { cardio: "Бодрое кардио", strength: "Сила и функционалка", dance: "Танцы" };
     const savedKey = "sekta-soft-power-playlist-saved-v1";
     let saved = new Set(JSON.parse(localStorage.getItem(savedKey) || "[]"));
@@ -252,7 +266,7 @@
         if (track.title === "Жить в кайф" && track.artist === "Макс Корж") return "https://music.yandex.by/album/1683700/track/32038184";
         return `https://music.yandex.ru/search?text=${encodeURIComponent(query)}`;
       }
-      return `https://open.spotify.com/search/${encodeURIComponent(query)}`;
+      return track.spotify || null;
     }
     function esc(value) {
       return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
@@ -260,7 +274,7 @@
     function render() {
       const query = queryEl.value.trim().toLocaleLowerCase("ru");
       const visible = tracks.filter(track => {
-        const availableOnService = activeService !== "yandex" || !unavailableOnYandex.has(track.title);
+        const availableOnService = activeService === "yandex" ? !unavailableOnYandex.has(track.title) : Boolean(track.spotify);
         const matchesFilter = activeFilter === "all" || track.category === activeFilter;
         const matchesSaved = !favouritesOnly || saved.has(track.title + "::" + track.artist);
         const matchesQuery = !query || `${track.title} ${track.artist} ${labels[track.category]}`.toLocaleLowerCase("ru").includes(query);
